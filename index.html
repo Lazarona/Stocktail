@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stocktail</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header><h1 class="title">Stocktail</h1></header>
+    <div class="divFormulaire">
+      <form class="form">
+        <input type="text" name="boisson" placeholder="Nom boisson" />
+        <input type="number" name="quantite" placeholder="Quantité" />
+        <input type="number" name="prixAchate" placeholder="Prix d'achat HT" />
+        <input type="number" name="prixVente" placeholder="Prix de vente HT" />
+        <select name="type" id="">
+          <option value="">--Please choose an option--</option>
+          <option value="alco">Boisson alcoolisée</option>
+          <option value="nonAlco">Boisson non alcoolisée</option>
+        </select>
+        <select name="degre">
+          <option value="10">10%</option>
+          <option value="20">20%</option>
+          <option value="30">30%</option>
+        </select>
+        <button type="submit" class="btnAdd">Add Product</button>
+      </form>
+    </div>
+    <div class="divList">
+      <ul class="ulContainer"></ul>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
