@@ -7,11 +7,11 @@ function render(array) {
     if (element.type === "nonAlco") {
       li =
       li +
-      `<li>Nom boisson: <input type="text" value="${element.boisson}"> Quantite: <input type="number" size=1 value="${element.quantite}"> Prix d'achat: <input type="number" value="${element.prixAchate}"> Prix de vente: <input type="number" value="${element.prixVente}"> Marge % : <input type="number" value="${element.marge}"> Prix de vente TTC <input type="number" value="${element.prixVenteTtc}">  </li>`;
+      `<li>Nom boisson: <input type="text" value="${element.boisson}"> Quantite: <input type="number" class="qnt" value="${element.quantite}"> Prix d'achat: <input type="number" value="${element.prixAchate}"> Prix de vente: <input type="number" value="${element.prixVente}"> Marge % : <input type="number" value="${element.marge}"> Prix de vente TTC <input type="number" value="${element.prixVenteTtc}">  </li>`;
     } else {
       li =
       li +
-      `<li>Nom boisson: <input type="text" value="${element.boisson}"> Quantite: <input type="number" size=1 value="${element.quantite}"> Prix d'achat: <input type="number" value="${element.prixAchate}"> Prix de vente: <input type="number" value="${element.prixVente}"> Marge % : <input type="number" value="${element.marge}"> Prix de vente TTC <input type="number" value="${element.prixVenteTtc}"> Degree alcool: <input type="number" value="${element.degre}"> </li>`;
+      `<li>Nom boisson: <input type="text" value="${element.boisson}"> Quantite: <input type="number" value="${element.quantite}"> Prix d'achat: <input type="number" value="${element.prixAchate}"> Prix de vente: <input type="number" value="${element.prixVente}"> Marge % : <input type="number" value="${element.marge}"> Prix de vente TTC <input type="number" value="${element.prixVenteTtc}"> Degree alcool: <input type="number" value="${element.degre}"> </li>`;
     }
     
   });
