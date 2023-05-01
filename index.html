@@ -8,7 +8,9 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <header><h1 class="title">Stocktail</h1></header>
+    <header><h1 class="title">Stocktail</h1>
+            <h1 class="h1">It counts your cocktails</h1>
+    </header>
     <div class="divFormulaire">
       <form class="form">
         <input type="text" name="boisson" placeholder="Nom boisson" />
@@ -16,15 +18,10 @@
         <input type="number" name="prixAchate" placeholder="Prix d'achat HT" />
         <input type="number" name="prixVente" placeholder="Prix de vente HT" />
         <select name="type" id="">
-          <option value="">--Please choose an option--</option>
           <option value="alco">Boisson alcoolisée</option>
           <option value="nonAlco">Boisson non alcoolisée</option>
         </select>
-        <select name="degre">
-          <option value="10">10%</option>
-          <option value="20">20%</option>
-          <option value="30">30%</option>
-        </select>
+        <input type="number" name="degre" placeholder="Degre alcool" />
         <button type="submit" class="btnAdd">Add Product</button>
       </form>
     </div>
