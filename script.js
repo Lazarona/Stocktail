@@ -6,7 +6,7 @@ function render(array) {
   array.forEach((element) => {
     li =
       li +
-      `<li>Nom boisson: ${element.boisson} Quantite: ${element.quantite} Prix d'achat: ${element.prixAchate} Prix de vente: ${element.prixVente} Marge: ${element.marge}%  </li>`;
+      `<li>Nom boisson: <input type="text" value="${element.boisson}"> Quantite: <input type="number" value="${element.quantite}"> Prix d'achat: <input type="number" value="${element.prixAchate}"> Prix de vente: <input type="number" value="${element.prixVente}"> Marge: ${element.marge}% </li>`;
   });
   ulContainer.innerHTML = li;
 }

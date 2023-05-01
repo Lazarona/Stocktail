@@ -1,3 +1,85 @@
-.divFormulaire {
-  outline: red dashed 1px;
+/* Font */
+body {
+  font-family: Arial, sans-serif;
 }
+
+/* Background color */
+body {
+  background-color: #f5f5f5;
+}
+
+/* Header */
+header {
+  background-color: #333;
+  color: white;
+  padding: 1rem;
+}
+
+/* Form */
+.form {
+display: flex;
+flex-direction: row;
+justify-content: center;
+margin: 2rem 0;
+padding: 0 2rem;
+background-color: #f9f9f9;
+border-radius: 10px;
+box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+width: 70vw;
+}
+
+.form input,
+.form select {
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  border: none;
+  border-radius: 5px;
+  margin-top: 1rem;
+  margin-right: 1rem;
+}
+
+.form select {
+  width: 30%;
+}
+
+.form button {
+  width: 30%;
+  padding: 0.5rem;
+  margin-top: 0.5rem;
+  background-color: #333;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  margin-bottom: 0.5rem;
+}
+
+.form button:hover {
+  background-color: #555;
+}
+
+/* List */
+.ulContainer {
+  margin: 2rem;
+}
+
+.ulContainer li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  background-color: #c6c6c6;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 60vw;
+}
+
+.ulContainer input {
+  width: 100px;
+  margin-right: 1rem;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 5px;
+}
+
