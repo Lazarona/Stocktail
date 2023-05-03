@@ -26,23 +26,24 @@ function render(array) {
          Marge % : <input type="number" class="inputMarge" value="${elementr.marge}"readonly> 
          Prix de vente TTC <input type="number" class="inputPrixVenteTtc" value="${elementr.prixVenteTtc}"readonly>
          Type : <input class="inputType" type="text" value="${elementr.type}"readonly>
-         Degree :  <input type="number" class="inputDegree" value="${elementr.degre}"readonly> 
+         Degree :  <input type="number" class="inputDegree" value="${elementr.degre}"readonly>
          <button type='button' class='btn-Mof'>EDIT</button> <button type='button' class='btn-Sup'>Supprimer</button>  </li>`;
     }
   });
   ulContainer.innerHTML = li;
+  let inputBoisson = document.querySelectorAll(".inputBoisson");
+  let inputQuantite = document.querySelectorAll(".inputQuantite");
+  let inputPrixAchate = document.querySelectorAll(".inputPrixAchate");
+  let inputPrixVente = document.querySelectorAll(".inputPrixVente");
+  let inputMarge = document.querySelectorAll(".inputMarge");
+  let inputPrixVenteTtc = document.querySelectorAll(".inputPrixVenteTtc");
+  let inputType = document.querySelectorAll(".inputType");
+  let inputDegre = document.querySelectorAll(".inputDegree");
   let modif = document.querySelectorAll(".btn-Mof");
   modif.forEach((element, index) => {
     element.addEventListener("click", () => {
-      let inputBoisson = document.querySelectorAll(".inputBoisson");
-      let inputQuantite = document.querySelectorAll(".inputQuantite");
-      let inputPrixAchate = document.querySelectorAll(".inputPrixAchate");
-      let inputPrixVente = document.querySelectorAll(".inputPrixVente");
-      let inputMarge = document.querySelectorAll(".inputMarge");
-      let inputPrixVenteTtc = document.querySelectorAll(".inputPrixVenteTtc");
-      let inputType = document.querySelectorAll(".inputType");
-      let inputDegre = document.querySelectorAll(".inputDegree");
       if (element.innerText.toLowerCase() == "edit") {
+        element.style.backgroundColor = "green";
         element.innerText = "SAVE";
         inputBoisson[index].removeAttribute("readonly");
         inputQuantite[index].removeAttribute("readonly");
@@ -54,6 +55,7 @@ function render(array) {
         inputDegre[index].removeAttribute("readonly", "hidden");
       } else {
         element.innerText = "EDIT";
+
         inputBoisson[index].setAttribute("readonly", "readonly");
         inputQuantite[index].setAttribute("readonly", "readonly");
         inputPrixAchate[index].setAttribute("readonly", "readonly");
@@ -66,18 +68,39 @@ function render(array) {
         inventaire[index].quantite = inputQuantite[index].value;
         inventaire[index].prixAchate = inputPrixAchate[index].value;
         inventaire[index].prixVente = inputPrixVente[index].value;
-        inventaire[index].marge =
-          (inputPrixVente[index].value / inputPrixAchate[index].value) * 100;
-        inventaire[index].prixVenteTtc = inputPrixVente[index].value * 1.2;
+        inventaire[index].marge = (
+          (inputPrixVente[index].value / inputPrixAchate[index].value) *
+          100
+        ).toFixed(2);
+        inventaire[index].prixVenteTtc = (
+          inputPrixVente[index].value * 1.2
+        ).toFixed(2);
         inventaire[index].type = inputType[index].value;
         if (inventaire[index].type === "nonAlco") {
           inputDegre[index].value = undefined;
         }
         inventaire[index].degre = inputDegre[index].value;
+
         render(inventaire);
         console.log(inventaire);
       }
     });
+  });
+  let allsuppBtn = document.querySelectorAll(".btn-Sup");
+  allsuppBtn.forEach((elementsup, indexsup) => {
+    elementsup.addEventListener("click", () => {
+      inventaire.splice(indexsup, 1);
+      render(inventaire);
+      console.log(inventaire);
+    });
+  });
+
+  inputQuantite.forEach((element, index) => {
+    if (inputQuantite[index].value >= 10) {
+      element.style.backgroundColor = "rgb(198, 255, 198";
+    } else {
+      element.style.backgroundColor = "#fad4d4";
+    }
   });
 }
 function addProduit(e) {
@@ -114,6 +137,7 @@ function addProduit(e) {
 }
 
 form.addEventListener("submit", addProduit);
+let inputQuantiteColor = document.querySelectorAll(".inputQuantite");
 
 function Produit(
   boisson,
