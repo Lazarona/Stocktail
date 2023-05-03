@@ -1,29 +1,38 @@
 let ulContainer = document.querySelector(".ulContainer");
 let form = document.querySelector(".form");
 let inventaire = [];
-var qrcode = new QRCode("qrcode");
 function render(array) {
   let li = "";
-  array.forEach((element, index) => {
-    if (element.type === "nonAlco") {
+  array.forEach((elementr) => {
+    if (elementr.type === "nonAlco") {
       li =
         li +
-        `<li>Nom boisson: <input class="inputBoisson" type="text" value="${element.boisson}"readonly> 
-         Quantite: <input class="inputQuantite" type="number" value="${element.quantite}"readonly> 
-         Prix d'achat: <input class="inputPrixAchate" type="number" value="${element.prixAchate}"readonly> 
-         Prix de vente: <input type="number" class="inputPrixVente" value="${element.prixVente}"readonly> 
-         Marge % : <input type="number" class="inputMarge" value="${element.marge}"readonly> 
-         Prix de vente TTC <input type="number" class="inputPrixVenteTtc" value="${element.prixVenteTtc}"readonly> 
-         <button type='button' class='btn-Mof'>EDIT</button>  </li>`;
+        `<li>Nom boisson: <input class="inputBoisson" type="text" value="${elementr.boisson}"readonly> 
+         Quantite: <input class="inputQuantite" type="number" value="${elementr.quantite}"readonly> 
+         Prix d'achat: <input class="inputPrixAchate" type="number" value="${elementr.prixAchate}"readonly> 
+         Prix de vente: <input type="number" class="inputPrixVente" value="${elementr.prixVente}"readonly> 
+         Marge % : <input type="number" class="inputMarge" value="${elementr.marge}"readonly> 
+         Prix de vente TTC <input type="number" class="inputPrixVenteTtc" value="${elementr.prixVenteTtc}"readonly>
+         Type : <input class="inputType" type="text" value="${elementr.type}"readonly>
+         <input type="number" class="inputDegree" value="${elementr.degre}"readonly hidden>
+         <button type='button' class='btn-Mof'>EDIT</button> <button type='button' class='btn-Sup'>Supprimer</button>  </li>`;
     } else {
       li =
         li +
-        `<li>Nom boisson: <input class="inputList" type="text" value="${element.boisson}"readonly> Quantite: <input class="inputList" type="number" value="${element.quantite}"readonly> Prix d'achat: <input type="number" class="inputList" value="${element.prixAchate}"readonly> Prix de vente: <input type="number" class="inputList" value="${element.prixVente}"readonly> Marge % : <input type="number" class="inputList" value="${element.marge}"readonly> Prix de vente TTC <input type="number" class="inputList" value="${element.prixVenteTtc}"readonly> Degree alcool: <input type="number" class="inputList" value="${element.degre}"readonly> <button type='button' class='btn-Mof'>EDIT</button> </li>`;
+        `<li>Nom boisson: <input class="inputBoisson" type="text" value="${elementr.boisson}"readonly> 
+         Quantite: <input class="inputQuantite" type="number" value="${elementr.quantite}"readonly> 
+         Prix d'achat: <input class="inputPrixAchate" type="number" value="${elementr.prixAchate}"readonly> 
+         Prix de vente: <input type="number" class="inputPrixVente" value="${elementr.prixVente}"readonly> 
+         Marge % : <input type="number" class="inputMarge" value="${elementr.marge}"readonly> 
+         Prix de vente TTC <input type="number" class="inputPrixVenteTtc" value="${elementr.prixVenteTtc}"readonly>
+         Type : <input class="inputType" type="text" value="${elementr.type}"readonly>
+         Degree :  <input type="number" class="inputDegree" value="${elementr.degre}"readonly> 
+         <button type='button' class='btn-Mof'>EDIT</button> <button type='button' class='btn-Sup'>Supprimer</button>  </li>`;
     }
   });
   ulContainer.innerHTML = li;
-  let allButton = document.querySelectorAll(".btn-Mof");
-  allButton.forEach((element, index) => {
+  let modif = document.querySelectorAll(".btn-Mof");
+  modif.forEach((element, index) => {
     element.addEventListener("click", () => {
       let inputBoisson = document.querySelectorAll(".inputBoisson");
       let inputQuantite = document.querySelectorAll(".inputQuantite");
@@ -31,7 +40,8 @@ function render(array) {
       let inputPrixVente = document.querySelectorAll(".inputPrixVente");
       let inputMarge = document.querySelectorAll(".inputMarge");
       let inputPrixVenteTtc = document.querySelectorAll(".inputPrixVenteTtc");
-
+      let inputType = document.querySelectorAll(".inputType");
+      let inputDegre = document.querySelectorAll(".inputDegree");
       if (element.innerText.toLowerCase() == "edit") {
         element.innerText = "SAVE";
         inputBoisson[index].removeAttribute("readonly");
@@ -40,6 +50,8 @@ function render(array) {
         inputPrixVente[index].removeAttribute("readonly", "readonly");
         inputMarge[index].removeAttribute("readonly");
         inputPrixVenteTtc[index].removeAttribute("readonly");
+        inputType[index].removeAttribute("readonly");
+        inputDegre[index].removeAttribute("readonly", "hidden");
       } else {
         element.innerText = "EDIT";
         inputBoisson[index].setAttribute("readonly", "readonly");
@@ -47,13 +59,22 @@ function render(array) {
         inputPrixAchate[index].setAttribute("readonly", "readonly");
         inputPrixVente[index].setAttribute("readonly", "readonly");
         inputMarge[index].setAttribute("readonly", "readonly");
+        inputPrixVenteTtc[index].setAttribute("readonly", "readonly");
+        inputType[index].setAttribute("readonly", "readonly");
+        inputDegre[index].setAttribute("readonly", "readonly");
         inventaire[index].boisson = inputBoisson[index].value;
         inventaire[index].quantite = inputQuantite[index].value;
         inventaire[index].prixAchate = inputPrixAchate[index].value;
         inventaire[index].prixVente = inputPrixVente[index].value;
         inventaire[index].marge =
           (inputPrixVente[index].value / inputPrixAchate[index].value) * 100;
-        render();
+        inventaire[index].prixVenteTtc = inputPrixVente[index].value * 1.2;
+        inventaire[index].type = inputType[index].value;
+        if (inventaire[index].type === "nonAlco") {
+          inputDegre[index].value = undefined;
+        }
+        inventaire[index].degre = inputDegre[index].value;
+        render(inventaire);
         console.log(inventaire);
       }
     });
