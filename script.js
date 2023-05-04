@@ -1,6 +1,11 @@
 let ulContainer = document.querySelector(".ulContainer");
 let form = document.querySelector(".form");
-let inventaire = [];
+if (localStorage.length === 0) {
+  inventaire = [];
+} else {
+  inventaire = JSON.parse(localStorage.getItem("inventaire"));
+  render(inventaire);
+}
 function render(array) {
   let li = "";
   array.forEach((elementr) => {
@@ -45,6 +50,7 @@ function render(array) {
       if (element.innerText.toLowerCase() == "edit") {
         element.style.backgroundColor = "green";
         element.innerText = "SAVE";
+        inputBoisson[index].focus();
         inputBoisson[index].removeAttribute("readonly");
         inputQuantite[index].removeAttribute("readonly");
         inputPrixAchate[index].removeAttribute("readonly");
@@ -55,7 +61,6 @@ function render(array) {
         inputDegre[index].removeAttribute("readonly", "hidden");
       } else {
         element.innerText = "EDIT";
-
         inputBoisson[index].setAttribute("readonly", "readonly");
         inputQuantite[index].setAttribute("readonly", "readonly");
         inputPrixAchate[index].setAttribute("readonly", "readonly");
@@ -82,6 +87,7 @@ function render(array) {
         inventaire[index].degre = inputDegre[index].value;
 
         render(inventaire);
+        localStorage.setItem("inventaire", JSON.stringify(inventaire));
         console.log(inventaire);
       }
     });
@@ -92,6 +98,7 @@ function render(array) {
       inventaire.splice(indexsup, 1);
       render(inventaire);
       console.log(inventaire);
+      localStorage.setItem("inventaire", JSON.stringify(inventaire));
     });
   });
 
@@ -106,38 +113,45 @@ function render(array) {
 function addProduit(e) {
   e.preventDefault();
   let data = new FormData(form);
-  if (data.get("type") === "nonAlco") {
-    let produit = new Produit(
-      data.get("boisson"),
-      data.get("quantite"),
-      data.get("prixAchate"),
-      data.get("prixVente"),
-      ((data.get("prixVente") / data.get("prixAchate")) * 100).toFixed(2), // .toFixed(2) make the number with only 2 decimals
-      data.get("prixVente") * 1.2,
-      data.get("type")
-    );
-    inventaire.push(produit);
-    console.log(inventaire);
-    render(inventaire, "all");
+  if (data.get("quantite") < 0) {
+    alert("Stock can not be negative");
   } else {
-    let produit = new Produit(
-      data.get("boisson"),
-      data.get("quantite"),
-      data.get("prixAchate"),
-      data.get("prixVente"),
-      ((data.get("prixVente") / data.get("prixAchate")) * 100).toFixed(2),
-      data.get("prixVente") * 1.2,
-      data.get("type"),
-      data.get("degre")
-    );
-    inventaire.push(produit);
-    console.log(inventaire);
-    render(inventaire, "all");
+    if (data.get("type") === "nonAlco") {
+      let produit = new Produit(
+        data.get("boisson"),
+        data.get("quantite"),
+        data.get("prixAchate"),
+        data.get("prixVente"),
+        ((data.get("prixVente") / data.get("prixAchate")) * 100).toFixed(2), // .toFixed(2) make the number with only 2 decimals
+        data.get("prixVente") * 1.2,
+        data.get("type")
+      );
+      inventaire.push(produit);
+      console.log(inventaire);
+      render(inventaire, "all");
+      localStorage.setItem("inventaire", JSON.stringify(inventaire));
+    } else {
+      let produit = new Produit(
+        data.get("boisson"),
+        data.get("quantite"),
+        data.get("prixAchate"),
+        data.get("prixVente"),
+        ((data.get("prixVente") / data.get("prixAchate")) * 100).toFixed(2),
+        data.get("prixVente") * 1.2,
+        data.get("type"),
+        data.get("degre")
+      );
+      inventaire.push(produit);
+      console.log(inventaire);
+      render(inventaire, "all");
+      localStorage.setItem("inventaire", JSON.stringify(inventaire));
+    }
   }
+
+  form.reset();
 }
 
 form.addEventListener("submit", addProduit);
-let inputQuantiteColor = document.querySelectorAll(".inputQuantite");
 
 function Produit(
   boisson,
