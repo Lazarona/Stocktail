@@ -1,8 +1,10 @@
 let ulContainer = document.querySelector(".ulContainer");
 let form = document.querySelector(".form");
 let inventaire = [];
+
 function render(array) {
   let li = "";
+
   array.forEach((elementr) => {
     if (elementr.type === "nonAlco") {
       li =
@@ -15,7 +17,10 @@ function render(array) {
          Prix de vente TTC <input type="number" class="inputPrixVenteTtc" value="${elementr.prixVenteTtc}"readonly>
          Type : <input class="inputType" type="text" value="${elementr.type}"readonly>
          <input type="number" class="inputDegree" value="${elementr.degre}"readonly hidden>
-         <button type='button' class='btn-Mof'>EDIT</button> <button type='button' class='btn-Sup'>Supprimer</button>  </li>`;
+         <button type='button' class='btn-Mof'>EDIT</button> <button type='button' class='btn-Sup'>Supprimer</button>
+         <button type='button' class='QrCode'><div id="qrCodeTest" name="qrCodeTest" value="${elementr.qr}"></div>QrCode</button>     
+     
+           </li>`;
     } else {
       li =
         li +
@@ -27,9 +32,12 @@ function render(array) {
          Prix de vente TTC <input type="number" class="inputPrixVenteTtc" value="${elementr.prixVenteTtc}"readonly>
          Type : <input class="inputType" type="text" value="${elementr.type}"readonly>
          Degree :  <input type="number" class="inputDegree" value="${elementr.degre}"readonly>
-         <button type='button' class='btn-Mof'>EDIT</button> <button type='button' class='btn-Sup'>Supprimer</button>  </li>`;
+         <button type='button' class='btn-Mof'>EDIT</button> <button type='button' class='btn-Sup'>Supprimer</button>
+         <button type='button' class='QrCode'><div id="qrCodeTest" name="qrCodeTest"value="${elementr.qr}"></div>QrCode</button>    
+         </li>`;
     }
   });
+
   ulContainer.innerHTML = li;
   let inputBoisson = document.querySelectorAll(".inputBoisson");
   let inputQuantite = document.querySelectorAll(".inputQuantite");
@@ -40,10 +48,15 @@ function render(array) {
   let inputType = document.querySelectorAll(".inputType");
   let inputDegre = document.querySelectorAll(".inputDegree");
   let modif = document.querySelectorAll(".btn-Mof");
+  let qrCodeTest = document.querySelector("#qrCodeTest");
+  let qrCode = new QRCode("qrCodeTest", {
+    text: "http://localhost:3000/",
+    width: 60,
+    height: 60,
+  });
   modif.forEach((element, index) => {
     element.addEventListener("click", () => {
       if (element.innerText.toLowerCase() == "edit") {
-        element.style.backgroundColor = "green";
         element.innerText = "SAVE";
         inputBoisson[index].removeAttribute("readonly");
         inputQuantite[index].removeAttribute("readonly");
@@ -55,7 +68,6 @@ function render(array) {
         inputDegre[index].removeAttribute("readonly", "hidden");
       } else {
         element.innerText = "EDIT";
-
         inputBoisson[index].setAttribute("readonly", "readonly");
         inputQuantite[index].setAttribute("readonly", "readonly");
         inputPrixAchate[index].setAttribute("readonly", "readonly");
@@ -64,6 +76,7 @@ function render(array) {
         inputPrixVenteTtc[index].setAttribute("readonly", "readonly");
         inputType[index].setAttribute("readonly", "readonly");
         inputDegre[index].setAttribute("readonly", "readonly");
+
         inventaire[index].boisson = inputBoisson[index].value;
         inventaire[index].quantite = inputQuantite[index].value;
         inventaire[index].prixAchate = inputPrixAchate[index].value;
@@ -72,9 +85,7 @@ function render(array) {
           (inputPrixVente[index].value / inputPrixAchate[index].value) *
           100
         ).toFixed(2);
-        inventaire[index].prixVenteTtc = (
-          inputPrixVente[index].value * 1.2
-        ).toFixed(2);
+        inventaire[index].prixVenteTtc = inputPrixVente[index].value * 1.2;
         inventaire[index].type = inputType[index].value;
         if (inventaire[index].type === "nonAlco") {
           inputDegre[index].value = undefined;
@@ -114,7 +125,8 @@ function addProduit(e) {
       data.get("prixVente"),
       ((data.get("prixVente") / data.get("prixAchate")) * 100).toFixed(2), // .toFixed(2) make the number with only 2 decimals
       data.get("prixVente") * 1.2,
-      data.get("type")
+      data.get("type"),
+      data.get("qrCodeTest")
     );
     inventaire.push(produit);
     console.log(inventaire);
@@ -128,7 +140,8 @@ function addProduit(e) {
       ((data.get("prixVente") / data.get("prixAchate")) * 100).toFixed(2),
       data.get("prixVente") * 1.2,
       data.get("type"),
-      data.get("degre")
+      data.get("degre"),
+      data.get("qrCodeTest")
     );
     inventaire.push(produit);
     console.log(inventaire);
@@ -147,7 +160,8 @@ function Produit(
   marge,
   prixVenteTtc,
   type,
-  degre
+  degre,
+  qr
 ) {
   this.boisson = boisson;
   this.quantite = quantite;
@@ -157,4 +171,5 @@ function Produit(
   this.prixVenteTtc = prixVenteTtc;
   this.type = type;
   this.degre = degre;
+  this.qr = qr;
 }
